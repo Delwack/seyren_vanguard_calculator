@@ -41,7 +41,7 @@ int main(int argc, char** argv)
 		bool has_card_3 = false;
 
 		//roll initial 5
-		for (int i = 0; i < 6; i++)
+		for (int i = 0; i < 5; i++)
 		{
 			uniform_int_distribution<unsigned> rd(0, cards);
 			int roll = rd(g);
@@ -53,7 +53,8 @@ int main(int argc, char** argv)
 			//card 2 is a subset of card 3.
 			else if (roll < card1 + card2)
 			{
-				if (has_card_2 == true) has_card_3 == true;
+				if (has_card_2)
+					has_card_3 == true;
 				has_card_2 = true;
 				card2--;
 			}
@@ -66,22 +67,26 @@ int main(int argc, char** argv)
 		}
 
 		//determine how many cards to redraw;
-		int redraw = 5;
-		if (has_card_1 == true)
+		int redraw = 3;
+		if (has_card_1)
 		{
 			redraw--;
 			card1 = 3;
 		}
-		if (has_card_2 == true) 
+		if (has_card_2) 
 		{
 			redraw--;
 			card2 = 3;
 		}
-		if (has_card_3 == true)
+		if (has_card_3)
 		{
 			redraw--;
 			card3 = 9;
 		}
+		
+		//numerical variables can be evaluated directly as booleans according to their value, 0 == false, any other value == true
+		if(!redraw)
+			redraw += 2;
 
 		//replace cards that need to be redrawn
 		cards += redraw;
@@ -98,7 +103,8 @@ int main(int argc, char** argv)
 			else if (roll < card1 + card2)
 			{
 				//if you have card 3 and get it again, congrats you now have card 3 too.
-				if (has_card_2 == true) has_card_3 == true;
+				if (has_card_2)
+					has_card_3 == true;
 				has_card_2 = true;
 				card2--;
 			}
@@ -109,6 +115,28 @@ int main(int argc, char** argv)
 			}
 			cards--;
 		}
+		//draw the final 6th card
+		uniform_int_distribution<unsigned> rd(0, cards);
+		int roll = rd(g);
+		if (roll < card1)
+		{
+			has_card_1 = true;
+			card1--;
+		}
+		else if (roll < card1 + card2)
+		{
+			if (has_card_2 == true)
+				has_card_3 == true;
+			has_card_2 = true;
+			card2--;
+		}
+		else if (roll < card1 + card2 + card3)
+		{
+			has_card_3 = true;
+			card3--;
+		}
+		cards--;
+		
 		if (has_card_1) F << '1' << '\t';
 		else F << '0' << '\t';
 		if (has_card_2) F << '1' << '\t';
