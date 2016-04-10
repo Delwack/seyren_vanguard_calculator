@@ -54,7 +54,7 @@ int main(int argc, char** argv)
 			else if (roll < card1 + card2)
 			{
 				if (has_card_2)
-					has_card_3 == true;
+					has_card_3 = true;
 				has_card_2 = true;
 				card2--;
 			}
@@ -85,7 +85,7 @@ int main(int argc, char** argv)
 		}
 		
 		//numerical variables can be evaluated directly as booleans according to their value, 0 == false, any other value == true
-		if(!redraw)
+		if(redraw)
 			redraw += 2;
 
 		//replace cards that need to be redrawn
@@ -104,7 +104,7 @@ int main(int argc, char** argv)
 			{
 				//if you have card 3 and get it again, congrats you now have card 3 too.
 				if (has_card_2)
-					has_card_3 == true;
+					has_card_3 = true;
 				has_card_2 = true;
 				card2--;
 			}
@@ -125,8 +125,8 @@ int main(int argc, char** argv)
 		}
 		else if (roll < card1 + card2)
 		{
-			if (has_card_2 == true)
-				has_card_3 == true;
+			if (has_card_2)
+				has_card_3 = true;
 			has_card_2 = true;
 			card2--;
 		}
